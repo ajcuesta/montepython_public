@@ -24,7 +24,9 @@ class CFHTLens_correlation(Likelihood):
         # Force the cosmological module to store Pk for k up to an arbitrary
         # number
         self.need_cosmo_arguments(data, {'P_k_max_1/Mpc': self.k_max})
-
+        # Compute non-linear power spectrum if requested
+        if(self.use_halofit):
+            self.need_cosmo_arguments(data, {'non linear':'halofit'})
         # Define array of l values, and initialize them
         # It is a logspace
         self.l = np.exp(self.dlnl*np.arange(self.nlmax))
