@@ -25,7 +25,7 @@ class CFHTLens_correlation(Likelihood):
         # number
         self.need_cosmo_arguments(data, {'P_k_max_1/Mpc': self.k_max})
         # Compute non-linear power spectrum if requested
-        if(self.use_halofit):
+        if (self.use_halofit):
             self.need_cosmo_arguments(data, {'non linear':'halofit'})
         # Define array of l values, and initialize them
         # It is a logspace
@@ -77,7 +77,7 @@ class CFHTLens_correlation(Likelihood):
         covmat = covmat/self.ah_factor
 
         # Read angular cut values (OPTIONAL)
-        if(self.use_cut_theta):
+        if (self.use_cut_theta):
             cut_values = np.zeros((self.nbin, 2))
             cutvalues_file_path = os.path.join(
                 self.data_directory, self.cutvalues_file)
@@ -303,7 +303,7 @@ class CFHTLens_correlation(Likelihood):
             lp = 0
             while (x < self.xstop and x < xmax):
                 lll = x/(theta[it]*a2r)
-                if(lll > lmax):
+                if (lll > lmax):
                     raise io_mp.LikelihoodError(
                         "ERROR: l>lmax")
                 Bessel0 = special.j0(x)
