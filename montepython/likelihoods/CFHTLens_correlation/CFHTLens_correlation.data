@@ -10,8 +10,7 @@ CFHTLens_correlation.xipm_file = "CFHTLENS/cfhtlens_xipm_6bin_blu.dat"
 CFHTLens_correlation.covmat_file = "CFHTLENS/covariance_matrix_blu.dat"
 
 # Selection function file
-CFHTLens_correlation.window_file = [
-    "CFHTLENS/nofz_%dblu.hist" % (i + 1) for i in range(self.nbin)]
+CFHTLens_correlation.window_file = ["CFHTLENS/nofz_%dblu.hist" % (i + 1) for i in range(self.nbin)]
 # number of discrete z values in selection function file
 CFHTLens_correlation.nzmax = 72
 # maximum redshift covered by survey
