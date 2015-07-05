@@ -279,7 +279,7 @@ class CFHTLens_correlation(Likelihood):
         # Convert C_l to xi's
         thetamin = np.min(self.theta_bins)*0.8
         thetamax = np.max(self.theta_bins)*1.2
-        nthetatot = np.ceil(math.log(thetamax/thetamin)/self.dlntheta)  # + 1
+        nthetatot = np.ceil(math.log(thetamax/thetamin)/self.dlntheta) + 1
         nthetatot = np.int32(nthetatot)
 
         lmin = self.l[0]
