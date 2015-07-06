@@ -35,7 +35,7 @@ class CFHTLens_correlation(Likelihood):
         self.z_p = np.zeros(self.nzmax)
         zptemp = np.zeros(self.nzmax)
         self.p = np.zeros((self.nzmax, self.nbin))
-        for i in range(self.nbin):
+        for i in xrange(self.nbin):
             window_file_path = os.path.join(
                 self.data_directory, self.window_file[i])
             if os.path.exists(window_file_path):
@@ -63,8 +63,8 @@ class CFHTLens_correlation(Likelihood):
                     "are observed do not match")
             temp = np.loadtxt(xipm_file_path)[:, 1:]
         k = 0
-        for j in range(nt):
-            for i in range(2*self.ntheta):
+        for j in xrange(nt):
+            for i in xrange(2*self.ntheta):
                 self.xi_obs[k] = temp[i, j]
                 k = k + 1
 
@@ -95,12 +95,12 @@ class CFHTLens_correlation(Likelihood):
         if (self.use_cut_theta):
             mask = np.zeros(2*nt*self.ntheta)
             iz = 0
-            for izl in range(self.nbin):
-                for izh in range(izl, self.nbin):
+            for izl in xrange(self.nbin):
+                for izh in xrange(izl, self.nbin):
                     # this counts the bin combinations
                     # iz=1 =>(1,1), iz=2 =>(1,2) etc
                     iz = iz + 1
-                    for i in range(self.ntheta):
+                    for i in xrange(self.ntheta):
                         j = (iz-1)*2*self.ntheta
                         xi_plus_cut = max(
                             cut_values[izl, 0], cut_values[izh, 0])
@@ -116,7 +116,7 @@ class CFHTLens_correlation(Likelihood):
         self.num_mask = np.sum(mask)
         self.mask_indices = np.zeros(self.num_mask)
         j = 0
-        for i in range(self.ntheta*nt*2):
+        for i in xrange(self.ntheta*nt*2):
             if (mask[i] == 1):
                 self.mask_indices[j] = i
                 j = j+1
@@ -200,7 +200,7 @@ class CFHTLens_correlation(Likelihood):
         # to self.theoretical_error
         alpha = np.zeros((self.nlmax, self.nzmax), 'float64')
         if self.theoretical_error != 0:
-            for index_l in range(self.nlmax):
+            for index_l in xrange(self.nlmax):
                 k = self.l[index_l]/self.r[1:]
                 alpha[index_l, 1:] = np.log(1.+k[:]/k_sigma[1:])/(
                     1.+np.log(1.+k[:]/k_sigma[1:]))*self.theoretical_error
@@ -211,14 +211,14 @@ class CFHTLens_correlation(Likelihood):
         # Compute the Error E_th_nu function
         if 'epsilon' in self.use_nuisance:
             E_th_nu = np.zeros((self.nlmax, self.nzmax), 'float64')
-            for index_l in range(1, self.nlmax):
+            for index_l in xrange(1, self.nlmax):
                 E_th_nu[index_l, :] = np.log(
                     1.+self.l[index_l]/k_sigma[:]*self.r[:]) / (
                     1.+np.log(1.+self.l[index_l]/k_sigma[:]*self.r[:]))*e_th_nu
 
         # Add the error function, with the nuisance parameter, to P_nl_th, if
         # the nuisance parameter exists
-                for index_l in range(self.nlmax):
+                for index_l in xrange(self.nlmax):
                     epsilon = data.mcmc_parameters['epsilon']['current']*(
                         data.mcmc_parameters['epsilon']['scale'])
                     pk[index_l, :] *= (1.+epsilon*E_th_nu[index_l, :])
@@ -295,7 +295,7 @@ class CFHTLens_correlation(Likelihood):
 
         a2r = math.pi/(180.*60.)
 
-        for it in range(nthetatot):
+        for it in xrange(nthetatot):
             theta[it] = thetamin*math.exp(self.dlntheta*it)
             xmin = lmin*theta[it]*a2r  # Convert from arcmin to radians
             xmax = lmax*theta[it]*a2r
@@ -308,8 +308,8 @@ class CFHTLens_correlation(Likelihood):
                         "ERROR: l>lmax")
                 Bessel0 = special.j0(x)
                 Bessel4 = special.jv(4, x)
-                for ib in range(self.nbin):
-                    for jb in range(ib, self.nbin):
+                for ib in xrange(self.nbin):
+                    for jb in xrange(ib, self.nbin):
                         Cval = lll*itp.splev(lll, spline_Cl[ib, jb])
                         i1 = Cval*Bessel0
                         i2 = Cval*Bessel4
@@ -320,8 +320,8 @@ class CFHTLens_correlation(Likelihood):
                 x = x+self.dx
                 lp = lll
 
-            for ib in range(self.nbin):
-                for jb in range(ib, self.nbin):
+            for ib in xrange(self.nbin):
+                for jb in xrange(ib, self.nbin):
                     xi1[it, jb, ib] = xi1[it, ib, jb]
                     xi2[it, jb, ib] = xi2[it, ib, jb]
 
@@ -346,10 +346,10 @@ class CFHTLens_correlation(Likelihood):
 
         iz = 0
         xi = np.zeros(np.size(self.xi_obs), 'float64')
-        for izl in range(self.nbin):
-            for izh in range(izl, self.nbin):
+        for izl in xrange(self.nbin):
+            for izh in xrange(izl, self.nbin):
                 iz = iz + 1  # this counts the bin combinations
-                for i in range(self.ntheta):
+                for i in xrange(self.ntheta):
                     j = (iz-1)*2*self.ntheta
                     xi[j+i] = itp.splev(
                         self.theta_bins[i], xi1_theta[izl, izh])
